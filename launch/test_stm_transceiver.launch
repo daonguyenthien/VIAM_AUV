@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="stm_transceiver" type="can_transceiver.py" 
+        name="can_transceiver" output="screen" >
+    <param name="enabled" value="true" />
+    <param name="port" value="/dev/ttyUSB0" />
+    <param name="baudrate" value="115200" />
+  </node>
+</launch>

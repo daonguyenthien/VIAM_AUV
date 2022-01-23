@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="ned_lat" value="10.763915776641571" />
+  <param name="ned_lon" value="106.65688877139627" />
+
+  <node pkg="navigator" type="gps-ahrs_receiver" 
+        name="gps_ahrs_receiver" output="screen" >
+    <param name="gps_enabled" value="false" />
+    <param name="gps_port" value="/dev/ttyACM0" />
+    <param name="gps_baudrate" value="38400" />
+  </node>
+
+  <node pkg="navigator" type="xsens.py" 
+        name="xsens_receiver" output="screen" >
+  </node>
+</launch>

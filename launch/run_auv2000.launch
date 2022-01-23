@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="ned_lat" value="10.763915776641571" />
+  <param name="ned_lon" value="106.65688877139627" />
+
+  <node pkg="navigator" type="gps-ahrs_receiver" 
+        name="gps_ahrs_receiver" output="screen" >
+    <param name="gps_enabled" value="false" />
+    <param name="gps_port" value="/dev/ttyACM0" />
+    <param name="gps_baudrate" value="38400" />
+  </node>
+
+  <node pkg="navigator" type="xsens.py" 
+        name="xsens_receiver" output="screen" >
+  </node>
+
+  <node pkg="gcs_transceiver" type="gcs_transceiver" 
+        name="gcs_transceiver" >
+    <param name="main_period" value="1.0" />
+    <param name="main_url" value="udp://192.168.0.103:14551@192.168.0.104:14550" />
+    <param name="autopilot_sysid" value="1" />
+    <param name="gcs_sysid" value="255" />
+  </node>
+
+  <node pkg="guider" type="guider" 
+        name="guider" output="screen" >
+    <param name="guiding_period" value="0.1" />
+    <param name="set_speed" value="0.5" />
+    <param name="set_heading" value="-1.57" />
+    <param name="LOS_radius" value="5.0" />
+    <param name="LOS_min_delta" value="5.0" />
+    <param name="LOS_max_delta" value="6.0" />
+    <param name="LOS_beta" value="0.0" />
+  </node>
+
+  <node pkg="controller" type="controller" 
+        name="controller" output="screen" >
+    <param name="controlling_period" value="0.1" />
+    <param name="avg_rpm" value="200.0" />
+    <param name="speed_Kp" value="0.0" />
+    <param name="speed_Ki" value="0.0" />
+    <param name="speed_Kd" value="0.0" />
+    <param name="heading_Kp" value="60.0" />
+    <param name="heading_Ki" value="0.0" />
+    <param name="heading_Kd" value="0.0" />
+  </node>
+
+  <node pkg="stm_transceiver" type="can_transceiver.py" 
+        name="can_transceiver" output="screen" >
+    <param name="enabled" value="true" />
+    <param name="port" value="/dev/ttyUSB1" />
+    <param name="baudrate" value="115200" />
+  </node>
+</launch>
