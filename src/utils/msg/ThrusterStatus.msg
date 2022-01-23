@@ -1,0 +1,8 @@
+Header header
+
+float64 motor_duty
+float64 motor_temp_on_chip
+float64 motor_temp_ambient
+float64 motor_current
+float64 motor_rspeed
+float64 motor_dspeed

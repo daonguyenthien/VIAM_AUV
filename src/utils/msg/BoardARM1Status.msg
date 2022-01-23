@@ -1,0 +1,9 @@
+Header header
+
+uint8 ls_piston_athead
+uint8 ls_piston_attail
+uint8 ls_mass_shifter_athead
+uint8 ls_mass_shifter_attail
+float64 altimeter_in_metres
+float64 altimeter_in_feet
+float64 altimeter_in_fathoms

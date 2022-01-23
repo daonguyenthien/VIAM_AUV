@@ -1,0 +1,9 @@
+Header header
+
+float64 rudder_position
+float64 rudder_speed
+float64 rudder_load
+float64 rudder_voltage
+float64 rudder_temperature
+float64 keller_pa3_pressure
+float64 keller_pa3_temperature
