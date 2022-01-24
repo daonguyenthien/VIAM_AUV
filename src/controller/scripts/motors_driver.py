@@ -21,6 +21,7 @@ thruster_speed = 0.0
 rudder_angle = 0.0
 mass_shifter_position = 0.0
 stopped = True
+piston = 0.0
 
 def getKey():
     tty.setraw(sys.stdin.fileno())
@@ -45,7 +46,16 @@ if __name__=="__main__":
 
     while(1):
         key = getKey()
-
+        if key == 'n':
+            piston = piston + 10
+            if piston >= 0:
+                piston = 0
+            print("piston = "+ str(piston))
+        if key == 'm':
+            piston = piston -10
+            if piston <= -50:
+                piston = -50
+            print('piston = '+str(piston))
         if key == 'i' or key == ',':
             thruster_speed = thruster_speed + 20 * cmdBindings[key][0]
             thruster_speed = min(thruster_speed, 500.0)
@@ -68,13 +78,13 @@ if __name__=="__main__":
             stopped = not stopped
             reqSetArming(False, 400, 0, stopped, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 
-        elif key == ' ':
+        elif True:
             msg = MotorsCommand()
             msg.header.stamp = rospy.Time.now()
             msg.thruster_speed = thruster_speed
             msg.rudder_angle = rudder_angle
             msg.mass_shifter_position = mass_shifter_position
-            msg.piston_position = 0.0
+            msg.piston_position = piston
             pubMotorsCmd.publish(msg)
             print "send:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" % (thruster_speed, rudder_angle, mass_shifter_position)
 

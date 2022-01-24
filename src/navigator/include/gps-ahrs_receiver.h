@@ -29,8 +29,11 @@ public:
   double ned_lat;
   double ned_lon;
   bool gps_enabled;
+  bool ahrs_enabled;
   string gps_port;
+  string ahrs_port;
   int gps_baudrate;
+  int ahrs_baudrate;
 
   ros::Publisher pubOdom;
 
@@ -49,6 +52,11 @@ public:
 
   GPSAHRSReceiverNode node;
   QSerialPort gpsDevice;
+  QSerialPort ahrsDevice;
+
+  char ahrsBuffer[BUFFER_SIZE];
+  int ahrsBytesReceived = 0;
+  bool isAhrsFirst = true;
 
   inline double CalLat2Deg(double Lat)
   {
@@ -71,6 +79,7 @@ public:
 
 public slots:
   void processGPSFrame();
+  void processAHRSFrame();
 };
 
 #endif // GPSAHRS_RECEIVER_H
