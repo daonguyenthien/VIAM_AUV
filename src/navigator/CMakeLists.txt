@@ -31,3 +31,6 @@ target_link_libraries(gps-ahrs_receiver
     ${catkin_LIBRARIES}
     Qt5::Core
     Qt5::SerialPort)
+catkin_install_python(PROGRAMS scripts/xsen.py
+DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

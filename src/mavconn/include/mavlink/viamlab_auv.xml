@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<mavlink>
+  <include>common.xml</include>
+  <dialect>1</dialect>
+  <messages>
+    <message id="13000" name="VIAM_ODOMETRY">
+      <description>Odometry message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="int32_t" name="lat" units="degE7"></field>
+      <field type="int32_t" name="lon" units="degE7"></field>
+      <field type="float" name="alt" units="m"></field>
+      <field type="float" name="x" units="m"></field>
+      <field type="float" name="y" units="m"></field>
+      <field type="float" name="z" units="m"></field>
+      <field type="float" name="roll" units="rad"></field>
+      <field type="float" name="pitch" units="rad"></field>
+      <field type="float" name="yaw" units="rad"></field>
+      <field type="float" name="vx" units="m/s"></field>
+      <field type="float" name="vy" units="m/s"></field>
+      <field type="float" name="vz" units="m/s"></field>
+      <field type="float" name="vroll" units="rad/s"></field>
+      <field type="float" name="vpitch" units="rad/s"></field>
+      <field type="float" name="vyaw" units="rad/s"></field>
+      <field type="float" name="ax" units="m/s^2"></field>
+      <field type="float" name="ay" units="m/s^2"></field>
+      <field type="float" name="az" units="m/s^2"></field>
+      <field type="float" name="aroll" units="rad/s^2"></field>
+      <field type="float" name="apitch" units="rad/s^2"></field>
+      <field type="float" name="ayaw" units="rad/s^2"></field>
+    </message>
+    <message id="13001" name="VIAM_SETPOINT">
+      <description>Setpoint message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="x" units="m"></field>
+      <field type="float" name="y" units="m"></field>
+      <field type="float" name="z" units="m"></field>
+      <field type="float" name="roll" units="rad"></field>
+      <field type="float" name="pitch" units="rad"></field>
+      <field type="float" name="yaw" units="rad"></field>
+      <field type="float" name="vx" units="m/s"></field>
+      <field type="float" name="vy" units="m/s"></field>
+      <field type="float" name="vz" units="m/s"></field>
+      <field type="float" name="vroll" units="rad/s"></field>
+      <field type="float" name="vpitch" units="rad/s"></field>
+      <field type="float" name="vyaw" units="rad/s"></field>
+    </message>
+    <message id="13002" name="VIAM_MOTORS_COMMAND">
+      <description>Motors command message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="thruster_speed" units="rpm"></field>
+      <field type="float" name="rudder_angle" units="deg"></field>
+      <field type="float" name="mass_shifter_position" units="mm"></field>
+      <field type="float" name="piston_position" units="mm"></field>
+    </message>
+    <message id="13003" name="VIAM_ERROR">
+      <description>Error message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="along_track" units="m"></field>
+      <field type="float" name="cross_track" units="m"></field>
+    </message>
+    <message id="13004" name="VIAM_THRUSTER_STATUS">
+      <description>Thruster status message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="motor_duty" units="%"></field>
+      <field type="float" name="motor_temp_on_chip" units="oC"></field>
+      <field type="float" name="motor_temp_ambient" units="oC"></field>
+      <field type="float" name="motor_current" units="mA"></field>
+      <field type="float" name="motor_rspeed" units="rpm"></field>
+      <field type="float" name="motor_dspeed" units="rpm"></field>
+    </message>
+    <message id="13005" name="VIAM_MASS_SHIFTER_STATUS">
+      <description>Mass shifter status message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="position" units="mm"></field>
+      <field type="float" name="motor_duty" units="%"></field>
+      <field type="float" name="motor_temp_on_chip" units="oC"></field>
+      <field type="float" name="motor_temp_ambient" units="oC"></field>
+      <field type="float" name="motor_current" units="mA"></field>
+      <field type="float" name="motor_rspeed" units="rpm"></field>
+      <field type="float" name="motor_dspeed" units="rpm"></field>
+    </message>
+    <message id="13006" name="VIAM_PISTON_STATUS">
+      <description>Piston status message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="position" units="mm"></field>
+      <field type="float" name="motor_duty" units="%"></field>
+      <field type="float" name="motor_temp_on_chip" units="oC"></field>
+      <field type="float" name="motor_temp_ambient" units="oC"></field>
+      <field type="float" name="motor_current" units="mA"></field>
+      <field type="float" name="motor_rspeed" units="rpm"></field>
+      <field type="float" name="motor_dspeed" units="rpm"></field>
+    </message>
+    <message id="13007" name="VIAM_BOARD_ARM1_STATUS">
+      <description>Board ARM1 status message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="uint8_t" name="ls_piston_athead" units=""></field>
+      <field type="uint8_t" name="ls_piston_attail" units=""></field>
+      <field type="uint8_t" name="ls_mass_shifter_athead" units=""></field>
+      <field type="uint8_t" name="ls_mass_shifter_attail" units=""></field>
+      <field type="float" name="altimeter_in_metres" units="m"></field>
+      <field type="float" name="altimeter_in_feet" units="ft"></field>
+      <field type="float" name="altimeter_in_fathoms" units="fathom"></field>
+    </message>
+    <message id="13008" name="VIAM_BOARD_ARM2_STATUS">
+      <description>Board ARM2 status message.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms"></field>
+      <field type="float" name="rudder_position" units="deg"></field>
+      <field type="float" name="rudder_speed" units="rpm"></field>
+      <field type="float" name="rudder_load" units="Nm"></field>
+      <field type="float" name="rudder_voltage" units="V"></field>
+      <field type="float" name="rudder_temperature" units="oC"></field>
+      <field type="float" name="keller_pa3_pressure" units="Pa"></field>
+      <field type="float" name="keller_pa3_temperature" units="oC"></field>
+    </message>
+  </messages>
+</mavlink>
