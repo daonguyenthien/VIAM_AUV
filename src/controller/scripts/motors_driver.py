@@ -6,22 +6,26 @@ from utils.srv import CommandLong
 
 import math
 import numpy
-import sys, select, termios, tty
+import sys
+import select
+import termios
+import tty
 
 cmdBindings = {
-        'i':(1,0),
-        ',':(-1,0),
-        'j':(1,0),
-        'l':(-1,0),
-        '[':(1,0),
-        ']':(-1,0),
-           }
+    'i': (1, 0),
+    ',': (-1, 0),
+    'j': (1, 0),
+    'l': (-1, 0),
+    '[': (1, 0),
+    ']': (-1, 0),
+}
 
 thruster_speed = 0.0
 rudder_angle = 0.0
 mass_shifter_position = 0.0
 stopped = True
 piston = 0.0
+
 
 def getKey():
     tty.setraw(sys.stdin.fileno())
@@ -34,25 +38,26 @@ def getKey():
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
     return key
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
-    
+
     rospy.init_node('motors_driver')
     pubMotorsCmd = rospy.Publisher('motors/cmd', MotorsCommand, queue_size=5)
     reqSetArming = rospy.ServiceProxy('command/set_arming', CommandLong)
 
     print "currently:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" % (thruster_speed, rudder_angle, mass_shifter_position)
     reqSetArming(False, 400, 0, stopped, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-
-    while(1):
+    rate = rospy.Rate(10)
+    while not rospy.is_shutdown():
         key = getKey()
         if key == 'n':
             piston = piston + 10
             if piston >= 0:
                 piston = 0
-            print("piston = "+ str(piston))
+            print("piston = " + str(piston))
         if key == 'm':
-            piston = piston -10
+            piston = piston - 10
             if piston <= -50:
                 piston = -50
             print('piston = '+str(piston))
@@ -69,7 +74,8 @@ if __name__=="__main__":
             print "update:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" % (thruster_speed, rudder_angle, mass_shifter_position)
 
         elif key == '[' or key == ']':
-            mass_shifter_position = mass_shifter_position + 10 * cmdBindings[key][0]
+            mass_shifter_position = mass_shifter_position + \
+                10 * cmdBindings[key][0]
             mass_shifter_position = min(mass_shifter_position, 200.0)
             mass_shifter_position = max(mass_shifter_position, -200.0)
             print "update:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" % (thruster_speed, rudder_angle, mass_shifter_position)
@@ -88,8 +94,8 @@ if __name__=="__main__":
             pubMotorsCmd.publish(msg)
             print "send:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" % (thruster_speed, rudder_angle, mass_shifter_position)
 
-        elif key == '\x03':
+        elif key == 'q':
             break
+        rate.sleep()
 
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-
