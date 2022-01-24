@@ -1,11 +1,14 @@
-#/usr/bin/env python3
+# /usr/bin/env python3
 
 import rospy
-from utils.msg import MotorsCommand,BoardARM2Status,BoardARM1Status,ThrusterStatus,MassShifterStatus,PistonStatus
+from utils.msg import MotorsCommand, BoardARM2Status, BoardARM1Status, ThrusterStatus, MassShifterStatus, PistonStatus
 from utils.srv import CommandLong, CommandLongResponse
 
-import struct, time, can
-import sys, termios
+import struct
+import time
+import can
+import sys
+import termios
 from can.interfaces.robotell import robotellBus
 
 #enabled = True
@@ -18,6 +21,7 @@ rudderAngle = 0.0
 massShifterPosition = 0.0
 pistonPosition = 0.0
 
+
 def check_sum(data):
     cs = 0
     for i in range(len(data)):
@@ -25,40 +29,32 @@ def check_sum(data):
     cs = ~cs
     cs = (cs + 1) & 0xff
     return cs
-    
+
+
 def get_int(ba):
     return int.from_bytes(ba, 'big')
-    
+
+
 def send_one(bus):
-    
-    
+
     for i in range(12):
         if (i < 5):
             pass
 
         if True:
-            frame,_ = bus._recv_internal(0)
+            frame, _ = bus._recv_internal(0)
             print(frame)
             if frame is not None:
                 data = struct.unpack('>f', frame.data[3:7])
                 print(frame)
-                
-                
-          
-                    
-                    
-                
-                
+
                 if frame.arbitration_id == 289:
                     if frame.data[1] == 77:
                         #MassShifterStatus.position = data
-                        #pub_mass.publish(MassShifterStatus)
+                        # pub_mass.publish(MassShifterStatus)
                         print("MassShifterStatus " + str(data))
-                     
-                    
-                
-                
-    
+
+
 def onMotorsCmdCallBack(msg):
     global bus, thrusterSpeed, rudderAngle, massShifterPosition, pistonPosition
     thrusterSpeed = msg.thruster_speed
@@ -66,7 +62,8 @@ def onMotorsCmdCallBack(msg):
     massShifterPosition = msg.mass_shifter_position
     pistonPosition = msg.piston_position
     send_one(bus)
-    
+
+
 def onSetArmingCallBack(req):
     global motorsLocked, thrusterSpeed
     if req.param1 == 1.0:
@@ -81,10 +78,10 @@ def onSetArmingCallBack(req):
     res = CommandLongResponse(True, 0)
     return res
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     settings = termios.tcgetattr(sys.stdin)
-    
-    
+
     enabled = True
     port = '/dev/ttyUSB0'
     baudrate = 115200
@@ -97,5 +94,5 @@ if __name__=="__main__":
     bus = robotellBus(channel=port, ttyBaudrate=baudrate)
     while True:
         send_one(bus)
-    
+
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
