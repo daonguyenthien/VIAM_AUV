@@ -10,14 +10,14 @@
     <param name="gps_baudrate" value="38400" />
   </node>
 
-  <node pkg="navigator" type="xsens.py" 
+  <!-- <node pkg="navigator" type="xsen.py" 
         name="xsens_receiver" output="screen" >
-  </node>
+  </node> -->
 
   <node pkg="gcs_transceiver" type="gcs_transceiver" 
         name="gcs_transceiver" >
     <param name="main_period" value="1.0" />
-    <param name="main_url" value="udp://192.168.0.103:14551@192.168.0.104:14550" />
+    <param name="main_url" value="udp://localhost:14551@localhost:14550" />
     <param name="autopilot_sysid" value="1" />
     <param name="gcs_sysid" value="255" />
   </node>
@@ -45,10 +45,14 @@
     <param name="heading_Kd" value="0.0" />
   </node>
 
-  <node pkg="stm_transceiver" type="can_transceiver.py" 
+  <!-- <node pkg="stm_transceiver" type="can_transceiver.py" 
         name="can_transceiver" output="screen" >
     <param name="enabled" value="true" />
     <param name="port" value="/dev/ttyUSB1" />
     <param name="baudrate" value="115200" />
+  </node> -->
+
+  <node pkg="stm_transceiver" type="test.py" 
+        name="can_transceiver" output="screen" >
   </node>
 </launch>
