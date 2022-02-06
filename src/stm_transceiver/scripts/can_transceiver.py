@@ -76,12 +76,13 @@ def send_one(bus):
 
                 if frame.arbitration_id == 291:
                     if frame.data[1] == 84:
+                        data = data*5
                         _ThrusterStatus.motor_duty = data
                         _ThrusterStatus.header.stamp = rospy.Time.now()
                         pub_thruster.publish(_ThrusterStatus)
 
                 if frame.arbitration_id == 290:
-
+                    data = 180/1600 * (data) - 112.5
                     _BoardARM2Status.rudder_position = data
                     print("rudder: "+str(data))
 
@@ -90,6 +91,7 @@ def send_one(bus):
 
                 if frame.arbitration_id == 289:
                     if frame.data[1] == 77:
+                        data = 400/58 * data - 200
                         _MassShifterStatus.position = data
                         _MassShifterStatus.header.stamp = rospy.Time.now()
                         pub_mass.publish(_MassShifterStatus)

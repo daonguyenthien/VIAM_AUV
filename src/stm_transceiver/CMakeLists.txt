@@ -32,6 +32,6 @@ target_link_libraries(can_transceiver
     ${catkin_LIBRARIES}
     Qt5::Core
     Qt5::SerialBus)
-catkin_install_python(PROGRAMS scripts/can_transceiver.py
+catkin_install_python(PROGRAMS scripts/can_transceiver.py scripts/test.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
