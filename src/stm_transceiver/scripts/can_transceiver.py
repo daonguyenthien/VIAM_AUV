@@ -42,7 +42,7 @@ def send_one(bus):
     thruster_pwm = thrusterSpeed / 5
     rudder_pwm = (2600 - 1000) / 180 * (rudderAngle + 90) + 1000
     mass_shifter_pwm = 58 / 400 * (massShifterPosition + 200)
-    piston_position_pwm = pistonPosition
+    piston_position_pwm = -pistonPosition*95/50
 
     global motorsLocked
 
@@ -97,7 +97,7 @@ def send_one(bus):
                         pub_mass.publish(_MassShifterStatus)
 
                     if frame.data[1] == 80 and frame.data[0] == 80:
-                        _PistonStatus.position = data
+                        _PistonStatus.position = -data*50/95
                         _PistonStatus.header.stamp = rospy.Time.now()
                         pub_piston.publish(_PistonStatus)
                     if frame.data[1] == 65:
