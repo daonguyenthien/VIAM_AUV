@@ -77,7 +77,7 @@ def send_one(bus):
                 if frame.arbitration_id == 291:
                     if frame.data[1] == 84:
                         data = data*5
-                        _ThrusterStatus.motor_duty = data
+                        _ThrusterStatus.motor_rspeed = data
                         _ThrusterStatus.header.stamp = rospy.Time.now()
                         pub_thruster.publish(_ThrusterStatus)
 
