@@ -48,8 +48,8 @@ if __name__ == "__main__":
 
     print("currently:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" %
           (thruster_speed, rudder_angle, mass_shifter_position))
-    reqSetArming(False, 400, 0, stopped, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    rate = rospy.Rate(10)
+    
+    rate = rospy.Rate(30)
     while not rospy.is_shutdown():
         key = getKey()
         if key == 'n':
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
         elif key == 'k':
             stopped = not stopped
-            reqSetArming(False, 400, 0, stopped, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+            
 
         elif True:
             msg = MotorsCommand()
@@ -95,9 +95,10 @@ if __name__ == "__main__":
             msg.rudder_angle = rudder_angle
             msg.mass_shifter_position = mass_shifter_position
             msg.piston_position = piston
+            msg.controll_lock = stopped
             pubMotorsCmd.publish(msg)
-            print("send:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm" %
-                  (thruster_speed, rudder_angle, mass_shifter_position))
+            print("send:\tspeed = %s rpm \tturn = %s deg \tdive = %s mm \t piston = %s mm \t lock = %s " %
+                  (thruster_speed, rudder_angle, mass_shifter_position,piston,stopped))
 
         elif key == 'q':
             break
